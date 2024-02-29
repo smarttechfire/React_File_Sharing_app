@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Upload() {
+function Upgrade() {
   return (
     <div>
-      Upload
+      Upgrade
     </div>
   )
 }
 
-export default Upload
+export default Upgrade
