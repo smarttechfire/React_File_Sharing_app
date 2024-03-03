@@ -55,7 +55,7 @@ function Upload() {
       userName: user?.fullName,
       password: "",
       id: docId,
-      shortUrl: "http://localhost:3000/" + docId,
+      shortUrl: process.env.NEXT_PUBLIC_BASE_URL + docId,
       
     });
     
