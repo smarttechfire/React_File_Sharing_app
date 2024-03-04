@@ -16,14 +16,15 @@ import {
 } from "firebase/storage";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 function Upload() {
   const { user } = useUser();
   const [progress, setProgress] = useState();
-
+  const router = useRouter();
   const storage = getStorage(app);
   const db = getFirestore(app);
-
+  const [fileDocId,setFileDocId]=useState();
   const [uploadCompleted, setUpCompleted] = useState(false);
 
   const uploadFile = (file) => {
@@ -37,7 +38,6 @@ function Upload() {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           console.log(file,downloadURL);
-          console.log("http://localhost:3000/" + generateRandomString())
 
           saveInfo(file, downloadURL);
         });
@@ -58,7 +58,7 @@ function Upload() {
       shortUrl: process.env.NEXT_PUBLIC_BASE_URL + docId,
       
     });
-    
+    setFileDocId(docId);
   };
 
   useEffect(() => {
@@ -69,13 +69,15 @@ function Upload() {
       }, 2000);
   }, [progress == 100]);
 
-  // useEffect(()=>{
-  //   uploadCompleted&&
-  //   setTimeout(()=>{
-  //     setUpCompleted(false);
-  //     window.location.reload();
-  //   },2000)
-  // },[uploadCompleted==true])
+  useEffect(()=>{
+    uploadCompleted&&
+    setTimeout(()=>{
+      setUpCompleted(false);
+      // window.location.reload();
+      router.push('/file-preview/'+fileDocId);
+      // console.log('/file-preview/'+fileDocId);
+    },2000)
+  },[uploadCompleted==true])
 
   return (
     
