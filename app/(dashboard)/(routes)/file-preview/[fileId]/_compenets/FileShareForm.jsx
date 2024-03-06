@@ -1,10 +1,27 @@
 import { Copy } from "lucide-react";
 import React, { useState } from "react";
-
+import GlobalApi from '@/_utils/GlobalApi';
+import { useUser } from "@clerk/nextjs";
 function FileShareForm({ file, onPasswordSave }) {
   const [isPasswordEnable, setIsEnablePassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [toast, setToast] = useState();
+  const { user } = useUser();
   
+  const sendEmail=()=>{
+    const data={
+        emailToSend: email,
+        userName: user?.fullName,
+        fileName: file.fileName,
+        fileSize: file.fileSize,
+        fileType: file.fileType,
+        shortUrl: file?.shortUrl,
+    }
+    GlobalApi.SendEmail(data).then(resp=>{
+        console.log(resp);
+    })
+  }
 
   return (
     file && (
@@ -69,7 +86,7 @@ function FileShareForm({ file, onPasswordSave }) {
             </div>
             <button
                 className=" p-2 disabled:bg-gray-300 bg-primary text-white hover:bg-purple-600 w-full mt-2 rounded-md"
-               
+                onClick={()=>sendEmail()}
             >
                 Send Email
             </button>
