@@ -6,7 +6,7 @@ import { app } from "./../../../../FirebaseConfig";
 import React, { useEffect, useState } from "react";
 // import TotalFileCard from "./_components/TotalFileCard";
 import TotalFileCard from "../files/_components/TotalFIleCard"
-import FileList from "../files/_components/_components/FileList";
+import FileList from "./_components/FileList";
 
 function Files() {
   const db = getFirestore(app);
