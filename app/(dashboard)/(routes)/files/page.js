@@ -4,8 +4,9 @@ import { collection, getDocs, getFirestore, query, where } from "firebase/firest
 import Link from "next/link";
 import { app } from "./../../../../FirebaseConfig";
 import React, { useEffect, useState } from "react";
-import TotalFileCard from "./_components/TotalFileCard";
-import FileList from "./_components/FileList";
+// import TotalFileCard from "./_components/TotalFileCard";
+import TotalFileCard from "../files/_components/TotalFIleCard"
+import FileList from "../files/_components/_components/FileList";
 
 function Files() {
   const db = getFirestore(app);
